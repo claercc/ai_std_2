@@ -1,5 +1,6 @@
 from openai import OpenAI
-from app.core.config import OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME
+# from app.core.config import OPENAI_API_KEY, OPENAI_BASE_URL, MODEL_NAME
+from app.core.config import settings
 from typing import Generator, Any
 from app.memory.store import conversation_messages, add_message
 # from app.services.memory import conversation_messages, add_message
@@ -17,7 +18,7 @@ def chat_stream(session_id: str, message: str) -> Generator[str, Any, Any]:
     # messages.append({"role": "user", "content": message})
     add_message(session_id, {"role": "user", "content": message})
     response = client.chat.completions.create(
-        model=MODEL_NAME,
+        model=settings.MODEL_NAME,
         messages=messages,
         stream=True
     )
